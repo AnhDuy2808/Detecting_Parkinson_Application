@@ -7,14 +7,13 @@ The **Detecting Parkinson's Application** is a machine learning-based tool desig
 The application follows these steps:
 1. **Audio Segmentation**: The `split.py` script splits audio files in the `audio_files` directory into 5-second segments and saves metadata to `segmented_info.csv`.
 2. **Feature Extraction**: The `extract_features.py` script extracts audio features from the segmented files and saves them to `extracted_features.csv`.
-3. **Data Preprocessing**: The `data_processing.ipynb` notebook in the `notebook` directory preprocesses the extracted features and saves the cleaned data to `cleaned_features.csv`.
-4. **Model Training**: The `training_ensemble_model.py` script trains stacking and voting ensemble models using the preprocessed data and saves the trained models.
-5. **Web Interface**: The `app.py` script launches a web application allowing users to input audio data and receive a Parkinson's disease diagnosis.
+3. **Data Preprocessing and Model Training**: The `parkinson_classification.ipynb` notebook in the `notebook` directory preprocesses the extracted features, visualizes the data, trains stacking and voting ensemble models, and saves the cleaned data to `cleaned_features.csv` along with the trained models.
+4. **Web Interface**: The `app.py` script launches a web application allowing users to input audio data and receive a Parkinson's disease diagnosis.
 
 ## Features
 - Splits audio files into 5-second segments for consistent analysis.
 - Extracts audio features such as jitter, shimmer, harmonic-to-noise ratio (HNR), and subharmonics, relevant to Parkinson's disease detection.
-- Preprocesses data to ensure quality and compatibility with machine learning models.
+- Preprocesses data to ensure quality and compatibility with machine learning models, including visualization of distributions and relationships.
 - Trains ensemble models (stacking and voting) for robust predictions.
 - Provides a user-friendly web interface for self-diagnosis.
 
@@ -54,7 +53,10 @@ The project uses the **Synthetic Vowels of Speakers with Parkinson’s Disease a
    ```bash
    pip install -r requirements.txt
    ```
-   *Note*: Ensure Python 3.x is installed.
+   *Note*: Ensure Python 3.x is installed. Install Jupyter separately to run the notebook:
+   ```bash
+   pip install jupyter
+   ```
 
 ## Usage
 1. **Prepare Audio Files**: Download the dataset from [Figshare](https://figshare.com/articles/dataset/Synthetic_vowels_of_speakers_with_Parkinson_s_disease_and_Parkinsonism/7628819) and place the audio files (e.g., `*.wav`) in the `audio_files` directory.
@@ -68,13 +70,8 @@ The project uses the **Synthetic Vowels of Speakers with Parkinson’s Disease a
    python src/extract_features.py
    ```
    This generates `extracted_features.csv`.
-4. **Preprocess Data**: Open and run the `data_processing.ipynb` notebook in the `notebook` directory to generate `cleaned_features.csv`.
-5. **Train Models**: Run the training script:
-   ```bash
-   python src/training_ensemble_model.py
-   ```
-   This trains and saves the ensemble models.
-6. **Launch Web App**: Start the web application:
+4. **Preprocess Data and Train Models**: Open and run the `parkinson_classification.ipynb` notebook in the `notebook` directory to preprocess the data, visualize it, train the ensemble models, and generate `cleaned_features_no_outliers.csv`.
+5. **Launch Web App**: Start the web application:
    ```bash
    python app.py
    ```
@@ -82,13 +79,12 @@ The project uses the **Synthetic Vowels of Speakers with Parkinson’s Disease a
 
 ## Directory Structure
 - `audio_files/`: Directory for input audio files (e.g., from the dataset).
-- `notebook/`: Contains `data_processing.ipynb` for data preprocessing.
+- `notebook/`: Contains `parkinson_classification.ipynb` for data preprocessing, visualization, and model training.
 - `data/segmented_info.csv`: Stores metadata of segmented audio files.
 - `data/extracted_features.csv`: Stores extracted audio features.
 - `data/cleaned_features.csv`: Stores preprocessed features.
 - `src/split.py`: Script for audio segmentation.
 - `src/extract_features.py`: Script for feature extraction.
-- `src/training_ensemble_model.py`: Script for training ensemble models.
 - `app.py`: Script for launching the web interface.
 - `requirements.txt`: Lists project dependencies.
 
@@ -108,11 +104,6 @@ The project requires the following Python packages (as specified in `requirement
 - tqdm==4.67.1
 - xgboost==3.0.5
 
-*Note*: Install Jupyter separately to run the `data_processing.ipynb` notebook:
-   ```bash
-   pip install jupyter
-   ```
-
 ## Contributing
 Contributions are welcome! To contribute:
 1. Fork the repository.
@@ -120,7 +111,6 @@ Contributions are welcome! To contribute:
 3. Make your changes and commit them (`git commit -m 'Add new feature'`).
 4. Push to the branch (`git push origin feature-branch`).
 5. Create a pull request.
-
 
 ## Acknowledgments
 - The dataset used in this project is provided by Jan Hlavnička, Roman Čmejla, Jiří Klempíř, Evžen Růžička, and Jan Rusz. Citation: Hlavnička, J., Čmejla, R., Klempíř, J., Růžička, E., & Rusz, J. (2019). Synthetic vowels of speakers with Parkinson’s disease and Parkinsonism. Figshare. [https://figshare.com/articles/dataset/Synthetic_vowels_of_speakers_with_Parkinson_s_disease_and_Parkinsonism/7628819](https://figshare.com/articles/dataset/Synthetic_vowels_of_speakers_with_Parkinson_s_disease_and_Parkinsonism/7628819).
