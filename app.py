@@ -16,15 +16,15 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Tải mô hình đã được huấn luyện
-MODEL_DIR = './model_assets_stacking'
+MODEL_DIR = './model_assets_voting'
 try:
-    model = joblib.load(os.path.join(MODEL_DIR, 'stacking_model.joblib'))
+    model = joblib.load(os.path.join(MODEL_DIR, 'voting_model.joblib'))
     scaler = joblib.load(os.path.join(MODEL_DIR, 'scaler.joblib'))
     with open(os.path.join(MODEL_DIR, 'feature_columns.json'), 'r') as f:
         feature_columns = json.load(f)
     print("Tải mô hình Ensemble thành công.")
 except FileNotFoundError:
-    print("LỖI: Không tìm thấy tệp mô hình. Vui lòng chạy 'train_ensemble_model.py' trước.")
+    print("LỖI: Không tìm thấy tệp mô hình. Vui lòng chạy 'notebook/parkinson_classification.ipynb' trước.")
     model = None
 
 
@@ -49,7 +49,7 @@ def predict():
         # Chuẩn hóa file âm thanh về định dạng WAV
         sound = AudioSegment.from_file(original_file_path)
         sound = sound.set_channels(1)
-        sound = sound.set_frame_rate(44100)
+        sound = sound.set_frame_rate(16000)
         sound.export(wav_file_path, format="wav")
 
         # Trích xuất đặc trưng từ file âm thanh
