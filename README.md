@@ -70,7 +70,7 @@ The project uses the **Synthetic Vowels of Speakers with Parkinson’s Disease a
    python src/extract_features.py
    ```
    This generates `extracted_features.csv`.
-4. **Preprocess Data and Train Models**: Open and run the `parkinson_classification.ipynb` notebook in the `notebook` directory to preprocess the data, visualize it, train the ensemble models, and generate `cleaned_features_no_outliers.csv`.
+4. **Preprocess Data and Train Models**: Open and run the `parkinson_classification.ipynb` notebook in the `notebook` directory to preprocess the data, visualize it, train the ensemble models, and generate `cleaned_features.csv`.
 5. **Launch Web App**: Start the web application:
    ```bash
    python app.py
